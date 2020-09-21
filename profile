@@ -21,7 +21,6 @@ cmd_file := $dir^/tmp/cmd
 
 test -d $dir/export || mkdir -p $dir/export
 test -d $dir/tmp || mkdir -p $dir/tmp
-test -d /users || mkdir -p /users
               
   
 
