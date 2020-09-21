@@ -8,7 +8,7 @@ export INFERNO_ROOT=/usr/inferno-os
 export AUTH_ADDR=$1
 export KEYFS_PASS=$2
 
-docker run --rm -it --name auth --network instances 					     \
+docker run --rm -it --name auth  					     \
   -e AUTH_ADDR								     \
   -e KEYFS_PASS								     \
   -v `pwd`/profile:${INFERNO_ROOT}/lib/sh/profile			     \
