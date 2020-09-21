@@ -21,6 +21,7 @@ cmd_file := $dir^/tmp/cmd
 
 test -d $dir/export || mkdir -p $dir/export
 test -d $dir/tmp || mkdir -p $dir/tmp
+test -d /users || mkdir -p /users
               
   
 
@@ -40,6 +41,20 @@ and {auth/keyfs -n < { echo -n $KEYFS_PASS } } {
     } {
       sh -c ${rget data} > $output_file
     }
+
+  file2chan $dir^/newuser {
+      if {~ ${rget offset} 0} {
+        cat $output_file | putrdata
+      } {
+        rread ''
+      }
+    } {
+      (user pass) := `{echo -n ${rget data}}
+	    mkdir /users/$user
+	    echo -n $pass > /users/$user/password
+	    auth/changelogin $user $pass > $output_file
+    }
+
   listen -v -t -A 'tcp!*!1917' { export $dir^/export & } 
   listen -v -t -A 'tcp!*!inflogin' {auth/logind&}
   listen -v -t -A 'tcp!*!infkey' {auth/keysrv&}
