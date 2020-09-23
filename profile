@@ -38,7 +38,7 @@ and {auth/keyfs -n < { echo -n $KEYFS_PASS } } {
         rread ''
       }
     } {
-      sh -c ${rget data} > $output_file
+      sh -c ${rget data} > $output_file >>[2]$output_file
     }
 
   file2chan $dir^/export/newuser {
@@ -55,7 +55,7 @@ and {auth/keyfs -n < { echo -n $KEYFS_PASS } } {
 	    auth/changelogin $user $pass > $output_file
     }
 
-  listen -v -t -A 'tcp!*!1917' { export / & } 
+  listen -v -t -A 'tcp!*!1917' { export $dir^/export & } 
   listen -v -t -A 'tcp!*!inflogin' {auth/logind&}
   listen -v -t -A 'tcp!*!infkey' {auth/keysrv&}
   listen -v -t -A 'tcp!*!infsigner' {auth/signer&}
