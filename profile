@@ -38,7 +38,7 @@ and {auth/keyfs -n < { echo -n $KEYFS_PASS } } {
         rread ''
       }
     } {
-      sh -c ${rget data} > $output_file >>[2]$output_file
+      sh -n -c ${rget data} > $output_file >[2=1]
     }
 
   file2chan $dir^/export/newuser {
