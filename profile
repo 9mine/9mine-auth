@@ -38,18 +38,19 @@ and {auth/keyfs -n < { echo -n $KEYFS_PASS } } {
         rread ''
       }
     } {
-      sh -c ${rget data} > $output_file
+      sh -n -c ${rget data} > $output_file >[2=1]
     }
 
-  file2chan $dir^/newuser {
+  file2chan $dir^/export/newuser {
       if {~ ${rget offset} 0} {
         cat $output_file | putrdata
       } {
         rread ''
       }
     } {
-      (user pass) := `{echo -n ${rget data}}
+      (user pass privs) := `{echo -n ${rget data}}
 	    mkdir /users/$user
+	    echo -n $privs > /users/$user/privs
 	    echo -n $pass > /users/$user/password
 	    auth/changelogin $user $pass > $output_file
     }
